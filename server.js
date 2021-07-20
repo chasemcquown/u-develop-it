@@ -30,7 +30,11 @@ const db = mysql.createConnection(
 // query the database to test the connection. NOTE: in the following code, the db object is using the query() method. This method runs the SQL query and executes the callback with all the resulting rows that match the query . Once this method executes the SQL command, the callback function captures the responses from the query in two variables: the err, which is the error response, and rows, which is the database query response.
 // GET all candidates, wrap in an Express.js route
 app.get('/api/candidates', (req, res) => {
-    const sql = `SELECT * FROM candidates`;
+    const sql = `SELECT candidates.*, parties.name 
+                 AS party_name 
+                 FROM candidates 
+                 LEFT JOIN parties 
+                 ON candidates.party_id = parties.id`;
   
     db.query(sql, (err, rows) => {
       if (err) {
@@ -47,7 +51,12 @@ app.get('/api/candidates', (req, res) => {
 // retrieve a candidate based on their unique ID #
 // GET a single candidate
 app.get('/api/candidate/:id', (req, res) => {
-    const sql = `SELECT * FROM candidates WHERE id = ?`;
+    const sql = `SELECT candidates.*, parties.name 
+                 AS party_name 
+                 FROM candidates 
+                 LEFT JOIN parties 
+                 ON candidates.party_id = parties.id 
+                 WHERE candidates.id = ?`;
     const params = [req.params.id];
   
     db.query(sql, params, (err, row) => {
