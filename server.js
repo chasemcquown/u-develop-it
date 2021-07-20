@@ -25,8 +25,40 @@ const db = mysql.createConnection(
 );
 
 // query the database to test the connection. NOTE: in the following code, the db object is using the query() method. This method runs the SQL query and executes the callback with all the resulting rows that match the query . Once this method executes the SQL command, the callback function captures the responses from the query in two variables: the err, which is the error response, and rows, which is the database query response.
-db.query(`SELECT * FROM candidates`, (err, rows) => {
+/* db.query(`SELECT * FROM candidates`, (err, rows) => {
     console.log(rows);
+}); */
+
+// retrieve a candidate based on their unique ID #
+// GET a single candidate
+// GET a single candidate
+/* db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(row);
+}); */
+
+// add the ability to delete a candidate
+// Delete a candidate
+/* db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+}); */
+
+// add the ability to creat a candidate
+// Create a candidate
+const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
+              VALUES (?,?,?,?)`;
+const params = [1, 'Ronald', 'Firbank', 1];
+
+db.query(sql, params, (err, result) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log(result);
 });
 
 // add route to handle user requests that aren't supported by the app
