@@ -12,5 +12,7 @@ router.use(require('./partyRoutes'));
 
 router.use(require('./voterRoutes'));
 
+router.use(require('./voteRoutes'));
+
 // export router's functionality so it can be used elsewhere
 module.exports = router;
